@@ -1,0 +1,45 @@
+public class Solution
+{
+    public int minimumMountainRemovals(int[] nums)
+    {
+        int n = nums.length;
+        int[] left = new int[n];
+        int[] right = new int[n];
+        int result =0;
+        for(int i = 1; i<n;i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                if(nums[i]>nums[j])
+                {
+                    left[i] = Math.max(left[i],left[j]+1);
+                }
+            }
+        }
+        for(int i = n-2;i>=0;i--)
+        {
+            for(int j = n-1; j>i;j--)
+            {
+                if(nums[i]>nums[j])
+                {
+                    right[i] = Math.max(right[i],right[j]+1);
+                }
+            }
+        }
+        for(int i = 1 ; i<n;i++)
+        {
+            if(left[i]!=0&&right[i]!=0)
+            {
+                result = Math.max(result,left[i]+right[i]);
+            }
+        }
+        return n-result-1;
+    }
+    public static void main(String[] args) 
+    {
+        Solution sl = new Solution();
+        int[] arr = {2,1,1,5,6,2,3,1};
+        int min = sl.minimumMountainRemovals(arr);
+        System.out.println("The minimum number of removals to make the array mountain is "+min);
+    }
+}
